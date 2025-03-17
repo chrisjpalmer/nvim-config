@@ -55,7 +55,7 @@ nvim_tree.setup {
     },
   },
   filters = {
-    dotfiles = false,
+    dotfiles = true,
     custom = {},
     exclude = {},
   },
@@ -105,4 +105,8 @@ nvim_tree.setup {
 keymap.set("n", "<space>s", require("nvim-tree.api").tree.toggle, {
   silent = true,
   desc = "toggle nvim-tree",
+})
+keymap.set("n","<A-i>", require("nvim-tree.api").tree.change_root_to_node, {
+  silent = true,
+  desc = "change root to node"
 })

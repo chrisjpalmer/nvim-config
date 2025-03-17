@@ -29,7 +29,7 @@ local custom_attach = function(client, bufnr)
   end
 
   map("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
-  map("n", "<C-]>", vim.lsp.buf.definition)
+  map("n", "<A-i>", vim.lsp.buf.definition, { desc = "go to definition"})
   map("n", "K", vim.lsp.buf.hover)
   map("n", "<C-k>", vim.lsp.buf.signature_help)
   map("n", "<space>rn", vim.lsp.buf.rename, { desc = "varialbe rename" })
@@ -129,6 +129,47 @@ capabilities.textDocument.foldingRange = {
 -- https://github.com/microsoft/pyright/blob/main/docs/configuration.md#diagnostic-settings-defaults
 -- Currently, the pyright also has some issues displaying hover documentation:
 -- https://www.reddit.com/r/neovim/comments/1gdv1rc/what_is_causeing_the_lsp_hover_docs_to_looks_like/
+if utils.executable("gopls") then
+  lspconfig.gopls.setup({
+    on_attach = custom_attach,
+    capabilities = capabilities,
+    filetypes = { "go", "mod", "sum", "work", "gotmpl" },
+    settings = {
+        gopls = {
+          semanticTokens = true,
+          completeUnimported = true,
+          usePlaceholders = true,
+          analyses = {
+            unusedparams = true,
+          },
+          staticcheck = true,
+          gofumpt = true,
+        },
+    },
+  })
+end
+
+lspconfig.svelte.setup {
+  filetypes = { "svelte" },
+  on_attach = function(client, bufnr)
+    if client.name == 'svelte' then
+      vim.api.nvim_create_autocmd("BufWritePost", {
+        pattern = { "*.js", "*.ts", "*.svelte" },
+        callback = function(ctx)
+          client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
+        end,
+      })
+    end
+    if vim.bo[bufnr].filetype == "svelte" then
+      vim.api.nvim_create_autocmd("BufWritePost", {
+        pattern = { "*.js", "*.ts", "*.svelte" },
+        callback = function(ctx)
+          client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
+        end,
+      })
+    end
+  end
+}
 
 if utils.executable("pyright") then
   local new_capability = {

@@ -20,11 +20,11 @@ vim.g.loaded_ruby_provider = 0 -- Disable ruby provider
 vim.g.loaded_node_provider = 0 -- Disable node provider
 vim.g.did_install_default_menus = 1 -- do not load menu
 
-if utils.executable("python3") then
+if utils.executable("/home/chrisjpalmer/miniconda3/bin/python3") then
   if vim.g.is_win then
-    vim.g.python3_host_prog = fn.substitute(fn.exepath("python3"), ".exe$", "", "g")
+    vim.g.python3_host_prog = fn.substitute(fn.exepath("/home/chrisjpalmer/miniconda3/bin/python3"), ".exe$", "", "g")
   else
-    vim.g.python3_host_prog = fn.exepath("python3")
+    vim.g.python3_host_prog = fn.exepath("/home/chrisjpalmer/miniconda3/bin/python3")
   end
 else
   api.nvim_err_writeln("Python3 executable not found! You must install Python3 and set its PATH correctly!")
@@ -38,7 +38,7 @@ vim.g.mapleader = ","
 vim.g.vimsyn_embed = "l"
 
 -- Use English as main language
-vim.cmd([[language en_US.UTF-8]])
+vim.cmd([[language C.UTF-8]])
 
 -- Disable loading certain plugins
 

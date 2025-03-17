@@ -23,6 +23,34 @@ end
 local plugin_specs = {
   -- auto-completion engine
   {
+    "olacin/telescope-gitmoji.nvim",
+    config = function()
+      local telescope = require("telescope")
+      telescope.setup({
+          extensions = {
+              gitmoji = {
+                  action = function(entry)
+                      vim.fn.setreg("", entry.value.value)
+                      vim.fn.setreg("0", entry.value.value)
+                      vim.fn.setreg("1", entry.value.value)
+                  end,
+              },
+          },
+      })
+      telescope.load_extension("gitmoji")
+    end,
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  },
+  {
+    "othree/html5.vim"
+  },
+  {
+    "pangloss/vim-javascript"
+  },
+  {
+    "evanleck/vim-svelte"
+  },
+  {
     "hrsh7th/nvim-cmp",
     name = "nvim-cmp",
     -- event = 'InsertEnter',
@@ -47,6 +75,15 @@ local plugin_specs = {
       require("config.lsp")
     end,
   },
+  {
+    "mattn/vim-goimports",
+    -- enabled = function ()
+     -- if vim.bo.filetype = "go"
+       -- return true
+     -- end
+     -- return false
+    -- end,
+  },
 
   {
     "nvim-treesitter/nvim-treesitter",
@@ -54,7 +91,7 @@ local plugin_specs = {
       if vim.g.is_mac then
         return true
       end
-      return false
+      return true
     end,
     event = "VeryLazy",
     build = ":TSUpdate",
@@ -105,6 +142,7 @@ local plugin_specs = {
     config = function()
       require("config.hlslens")
     end,
+    "olacin/telescope-gitmoji.nvim",
   },
   {
     "Yggdroot/LeaderF",
@@ -281,7 +319,7 @@ local plugin_specs = {
   { "tpope/vim-commentary", event = "VeryLazy" },
 
   -- Multiple cursor plugin like Sublime Text?
-  -- 'mg979/vim-visual-multi'
+  { 'mg979/vim-visual-multi'},
 
   -- Show undo history visually
   { "simnalamburt/vim-mundo", cmd = { "MundoToggle", "MundoShow" } },
