@@ -76,6 +76,11 @@ local plugin_specs = {
     end,
   },
   {
+    "chrisjpalmer/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    opts = {},
+  },
+  {
     "mattn/vim-goimports",
     -- enabled = function ()
      -- if vim.bo.filetype = "go"

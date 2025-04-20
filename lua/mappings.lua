@@ -74,6 +74,11 @@ keymap.set("n", "<space>O", "printf('m`%sO<ESC>``', v:count1)", {
   desc = "insert line above",
 })
 
+-- custom typescript go to source definition LSP command
+-- by default gd doesn't go to the source definition
+-- This maps gh to go to the source definition
+keymap.set("n", "gh", "<cmd>TSToolsGoToSourceDefinition<cr>")
+
 -- Move the cursor based on physical lines, not the actual lines.
 keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
