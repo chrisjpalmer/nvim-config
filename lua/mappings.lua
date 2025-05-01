@@ -1,6 +1,9 @@
 local keymap = vim.keymap
 local uv = vim.uv
 
+-- Remap visual block because WSL captures Control-v usually
+keymap.set("n", "<leader>b", "<cmd>execute \"normal <c-v>\"<cr>", { desc = "enter visual block" })
+
 -- Save key strokes (now we do not need to press shift to enter command mode).
 keymap.set({ "n", "x" }, ";", ":")
 
